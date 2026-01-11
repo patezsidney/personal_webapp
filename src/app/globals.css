@@ -8,12 +8,21 @@
     --color-muted: #6272a4;
 
     --color-primary: #bd93f9;
+    --color-primary-hover: #a77bfa;
+
     --color-secondary: #ff79c6;
+    --color-secondary-hover: #ff5fb8;
 
     --color-success: #50fa7b;
     --color-danger: #ff5555;
     --color-warning: #f1fa8c;
     --color-info: #8be9fd;
+
+    --color-border: #44475a;
+    --color-focus: #8be9fd;
+
+    --color-disabled-bg: #3b3e52;
+    --color-disabled-fg: #9a9cab;
 }
 
 html, body {

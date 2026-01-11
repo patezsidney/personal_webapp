@@ -16,3 +16,13 @@ export async function login(username: string, password: string) {
 
   return data;
 }
+
+export function logout() {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+}
+
+export function isAuthenticated(): boolean {
+  if (typeof window === 'undefined') return false;
+  return Boolean(localStorage.getItem('access_token'));
+}
