@@ -1,11 +1,12 @@
 import { Header } from '@/components/layout/header';
+import { logout } from '@/services/auth';
 
 export default function HomePage() {
   return (
     <>
-      <Header />
+      <Header loggedUser={false} handleLogout={logout} />
 
-      <main className="mx-auto max-w-7xl px-6 py-12">
+      <main className="mx-auto max-w-7xl px-6 py-16">
         <h1 className="mb-4 text-3xl font-bold">Controle pessoal</h1>
 
         <p className="max-w-xl text-muted">
