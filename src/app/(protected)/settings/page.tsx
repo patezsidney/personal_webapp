@@ -1,41 +1,58 @@
 import Link from 'next/link';
-import { Card, Flex, Text } from '@radix-ui/themes';
+import { Box, Card, Flex, Grid, Text } from '@radix-ui/themes';
+import { ListBulletIcon, CardStackIcon, PersonIcon } from '@radix-ui/react-icons';
 
 const SettingsPage = () => {
+  const options = [
+    {
+      href: '/settings/categories',
+      title: 'Categorias',
+      description: 'Gerencie categorias de despesas e receitas',
+      icon: <ListBulletIcon width={30} height={30} />,
+    },
+    {
+      href: '/settings/accounts',
+      title: 'Contas Bancárias',
+      description: 'Contas bancárias e carteiras',
+      icon: <PersonIcon width={30} height={30} />,
+    },
+    {
+      href: '/settings/credit-cards',
+      title: 'Cartões de Crédito',
+      description: 'Cartões de crédito e loja',
+      icon: <CardStackIcon width={30} height={30} />,
+    },
+  ];
+
   return (
     <Flex direction="column" gap="4">
       <Text size="5" weight="bold">
         Configurações
       </Text>
 
-      <Flex gap="4" wrap="wrap">
-        <Link href="/settings/categories">
-          <Card style={{ width: 220, cursor: 'pointer' }}>
-            <Text weight="medium">Categorias</Text>
-            <Text size="2" color="gray">
-              Gerencie categorias de despesas e receitas
-            </Text>
-          </Card>
-        </Link>
-
-        <Link href="/settings/accounts">
-          <Card style={{ width: 220, cursor: 'pointer' }}>
-            <Text weight="medium">Contas</Text>
-            <Text size="2" color="gray">
-              Contas bancárias e carteiras
-            </Text>
-          </Card>
-        </Link>
-
-        <Link href="/settings/credit-cards">
-          <Card style={{ width: 220, cursor: 'pointer' }}>
-            <Text weight="medium">Cartões</Text>
-            <Text size="2" color="gray">
-              Cartões de crédito e loja
-            </Text>
-          </Card>
-        </Link>
-      </Flex>
+      <Grid gap="4" columns="3">
+        {options.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <Card>
+              <Flex gap="3" align="center" p="3">
+                {item.icon}
+                <Box>
+                  <Text weight="bold" size="5" as="div">
+                    {item.title}
+                  </Text>
+                  <Text size="2" color="gray" as="div">
+                    {item.description}
+                  </Text>
+                </Box>
+              </Flex>
+            </Card>
+          </Link>
+        ))}
+      </Grid>
     </Flex>
   );
 };

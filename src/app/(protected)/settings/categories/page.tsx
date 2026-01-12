@@ -8,13 +8,15 @@ import { useCategories } from '@/hooks/categories/useCategories';
 import { useCreateCategory } from '@/hooks/categories/useCreateCategory';
 import { useDeleteCategory } from '@/hooks/categories/useDeleteCategory';
 import { useTransactionNatures } from '@/hooks/transactions/useTransactionNatures';
-import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
 import { CategoryDialog } from '@/app/(protected)/settings/categories/categoryDialog';
 import { useUpdateCategory } from '@/hooks/categories/useUpdateCategory';
 import { DeleteConfirmDialog } from '@/components/ui/DeleteConfirmationDialog';
+import { useRouter } from 'next/navigation';
 
 const CategoriesPage = () => {
+  const router = useRouter();
   const categoriesResult = useCategories();
   const natureResult = useTransactionNatures();
 
@@ -61,21 +63,27 @@ const CategoriesPage = () => {
   return (
     <Flex direction="column" gap="4">
       <Flex justify="between" align="center">
-        <Text size="6" weight="bold">
-          Categorias
-        </Text>
-
+        <Flex align="center" gap="4">
+          <IconButton onClick={() => router.back()} size="3" style={{ cursor: 'pointer' }}>
+            <ArrowLeftIcon />
+          </IconButton>
+          <Text size="6" weight="bold">
+            Categorias
+          </Text>
+        </Flex>
         <Button
           onClick={() => {
             setEditingCategory(null);
             setOpen(true);
           }}
+          size="3"
+          style={{ cursor: 'pointer' }}
         >
           Nova categoria
         </Button>
       </Flex>
 
-      <Flex direction="column" gap="2">
+      <Flex direction="column" gap="4" mt="4">
         {categoriesResult.data?.map((category) => (
           <Card key={category.id}>
             <Flex justify="between" align="center">
@@ -89,7 +97,9 @@ const CategoriesPage = () => {
                   }}
                 />
 
-                <Text>{category.name}</Text>
+                <Text size="4" weight="medium">
+                  {category.name}
+                </Text>
               </Flex>
               <Flex align="center" gap="4">
                 <Tooltip content="Editar categoria">
@@ -100,13 +110,21 @@ const CategoriesPage = () => {
                       setEditingCategory(category);
                       setOpen(true);
                     }}
+                    size="3"
+                    style={{ cursor: 'pointer' }}
                   >
-                    <Pencil1Icon />
+                    <Pencil1Icon width={20} height={20} />
                   </IconButton>
                 </Tooltip>
                 <Tooltip content="Excluir categoria">
-                  <IconButton variant="soft" color="red" onClick={() => setDeleteTarget(category)}>
-                    <TrashIcon />
+                  <IconButton
+                    variant="soft"
+                    color="red"
+                    onClick={() => setDeleteTarget(category)}
+                    size="3"
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <TrashIcon width={20} height={20} />
                   </IconButton>
                 </Tooltip>
               </Flex>
