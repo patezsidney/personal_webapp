@@ -7,6 +7,7 @@ import { Header } from '@/components/layout/header';
 import { isAuthenticated, logout } from '@/services/auth';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Box, Container, Flex } from '@radix-ui/themes';
+import { ToastProvider } from '@/contexts/ToastContext';
 
 const emptySubscribe = () => () => {};
 const getSnapshot = () => true;
@@ -34,7 +35,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <>
+    <ToastProvider>
       <Flex direction="column" minHeight="100vh">
         <Box
           style={{
@@ -59,6 +60,6 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
           </Box>
         </Flex>
       </Flex>
-    </>
+    </ToastProvider>
   );
 }

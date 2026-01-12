@@ -29,18 +29,18 @@ export const DeleteConfirmDialog = ({
         <AlertDialog.Title size="6">{title}</AlertDialog.Title>
 
         <AlertDialog.Description>
-          <Flex direction="column" gap="2">
-            <Text size="4" color="gray">
-              {description}
-            </Text>
-
-            {showWarning && (
-              <Text size="4" color="gray">
-                <Strong>Atenção:</Strong> Esta ação não pode ser desfeita.
-              </Text>
-            )}
-          </Flex>
+          <Text size="4" color="gray">
+            {description}
+          </Text>
         </AlertDialog.Description>
+
+        {showWarning && (
+          <AlertDialog.Description>
+            <Text size="4" color="gray">
+              <Strong>Atenção:</Strong> Esta ação não pode ser desfeita.
+            </Text>
+          </AlertDialog.Description>
+        )}
 
         <Flex justify="end" gap="3" mt="4">
           <AlertDialog.Cancel>
