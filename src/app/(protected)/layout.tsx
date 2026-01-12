@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
 
@@ -8,20 +8,29 @@ import { isAuthenticated, logout } from '@/services/auth';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Box, Container, Flex } from '@radix-ui/themes';
 
+const emptySubscribe = () => () => {};
+const getSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [loggedUser, setLoggedUser] = useState(isAuthenticated());
+  const isReady = useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot);
+
+  const authStatus = isReady ? isAuthenticated() : false;
 
   useEffect(() => {
-    if (!loggedUser) {
+    if (isReady && !authStatus) {
       router.replace('/login');
     }
-  }, [router, loggedUser]);
+  }, [isReady, authStatus, router]);
 
   function handleLogout() {
     logout();
-    setLoggedUser(false);
     router.replace('/');
+  }
+
+  if (!isReady) {
+    return null; // Or a loading spinner
   }
 
   return (
@@ -35,7 +44,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
             backgroundColor: 'var(--color-background)',
           }}
         >
-          <Header loggedUser={loggedUser} handleLogout={handleLogout} />
+          <Header loggedUser={authStatus} handleLogout={handleLogout} />
         </Box>
         <Flex style={{ flex: 1, alignItems: 'stretch' }}>
           <Sidebar />
