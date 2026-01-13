@@ -29,7 +29,7 @@ export const CategoryDialog = ({
   const isEdit = Boolean(category);
 
   const [name, setName] = useState(category?.name ?? '');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(category?.description ?? '');
   const [color, setColor] = useState(category?.params?.color ?? 'grey');
   const [natureId, setNatureId] = useState<number | undefined>(category?.nature?.id);
 
