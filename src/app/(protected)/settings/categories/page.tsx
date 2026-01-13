@@ -31,6 +31,7 @@ const CategoriesPage = () => {
   const handleCreate = async (payload: {
     name: string;
     natureId: number;
+    description?: string;
     params?: { color?: string };
   }) => {
     await createCategory.mutateAsync(payload);
@@ -39,6 +40,7 @@ const CategoriesPage = () => {
   const handleUpdate = async (payload: {
     name: string;
     natureId: number;
+    description?: string;
     params?: { color?: string };
   }) => {
     if (!editingCategory) return;

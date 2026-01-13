@@ -31,7 +31,7 @@ export const createCategory = async (payload: CategoryCreatePayload): Promise<Ca
     name: payload.name,
     description: payload.description,
     nature_id: payload.natureId,
-    params: JSON.stringify(payload.params),
+    params: payload.params,
   });
   return data;
 };
@@ -44,7 +44,7 @@ export const updateCategory = async (
     name: payload.name,
     description: payload.description,
     nature_id: payload.natureId,
-    params: JSON.stringify(payload.params),
+    params: payload.params,
   });
   return data;
 };

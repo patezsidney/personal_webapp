@@ -14,6 +14,7 @@ interface Props {
   onSubmit: (payload: {
     name: string;
     natureId: number;
+    description?: string;
     params?: { color?: string };
   }) => Promise<void>;
 }
@@ -38,6 +39,7 @@ export const CategoryDialog = ({
     await onSubmit({
       name,
       natureId,
+      description,
       params: { color },
     });
 
