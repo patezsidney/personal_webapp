@@ -19,6 +19,11 @@ interface Props {
   }) => Promise<void>;
 }
 
+type FormErrors = {
+  name?: string;
+  natureId?: string;
+};
+
 export const CategoryDialog = ({
   open,
   onOpenChange,
@@ -32,10 +37,26 @@ export const CategoryDialog = ({
   const [description, setDescription] = useState(category?.description ?? '');
   const [color, setColor] = useState(category?.params?.color ?? 'grey');
   const [natureId, setNatureId] = useState<number | undefined>(category?.nature?.id);
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!name.trim()) {
+      newErrors.name = 'O campo Nome é obrigatório';
+    }
+    if (!natureId) {
+      newErrors.natureId = 'A natureza é obrigatória';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+  const isFormValid = name.trim().length > 0 && Boolean(natureId);
 
   const handleSubmit = async () => {
-    if (!name || !natureId) return;
-
+    if (!validateForm()) return;
+    if (!natureId) return;
     await onSubmit({
       name,
       natureId,
@@ -82,9 +103,19 @@ export const CategoryDialog = ({
               placeholder="Nome da categoria"
               required
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (errors.name) {
+                  setErrors((prev) => ({ ...prev, name: undefined }));
+                }
+              }}
               size="3"
             />
+            {errors.name && (
+              <Text size="2" color="red">
+                {errors.name}
+              </Text>
+            )}
           </Box>
 
           <Box>
@@ -106,7 +137,15 @@ export const CategoryDialog = ({
 
             <Select.Root
               value={natureId?.toString()}
-              onValueChange={(v) => setNatureId(Number(v))}
+              onValueChange={(v) => {
+                setNatureId(Number(v));
+                if (errors.natureId) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    natureId: undefined,
+                  }));
+                }
+              }}
               size="3"
             >
               <Select.Trigger placeholder="Selecione o tipo" />
@@ -118,6 +157,11 @@ export const CategoryDialog = ({
                 ))}
               </Select.Content>
             </Select.Root>
+            {errors.natureId && (
+              <Text size="2" color="red">
+                {errors.natureId}
+              </Text>
+            )}
           </Flex>
           <Box>
             <Text as="div" size="2" mb="2" weight="bold">
@@ -147,7 +191,7 @@ export const CategoryDialog = ({
               Cancelar
             </Button>
 
-            <Button onClick={handleSubmit} size="3">
+            <Button onClick={handleSubmit} size="3" disabled={!isFormValid}>
               Salvar
             </Button>
           </Flex>
