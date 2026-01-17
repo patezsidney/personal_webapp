@@ -1,25 +1,24 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateCategory, CategoryCreatePayload } from '@/services/categories.service';
+import { deleteAccount } from '@/services/accounts.service';
 import { useToast } from '@/contexts/ToastContext';
 
-export const useUpdateCategory = () => {
+export const useDeleteAccount = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToast();
 
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: CategoryCreatePayload }) =>
-      updateCategory(id, payload),
+    mutationFn: deleteAccount,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['accounts'] }).then(() => {});
       showToast({
         title: 'Sucesso',
-        description: 'Categoria atualizada com sucesso.',
+        description: 'Conta excluída com sucesso.',
         type: 'success',
       });
     },
     onError: (error) => {
       showToast({
-        title: 'Erro ao atualizar categoria',
+        title: 'Erro ao excluir conta',
         description: error.message,
         type: 'error',
       });

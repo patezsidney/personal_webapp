@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateCategory, CategoryCreatePayload } from '@/services/categories.service';
+import { updateAccount, AccountCreatePayload } from '@/services/accounts.service';
 import { useToast } from '@/contexts/ToastContext';
 
-export const useUpdateCategory = () => {
+export const useUpdateAccount = () => {
   const queryClient = useQueryClient();
   const { showToast } = useToast();
 
   return useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: CategoryCreatePayload }) =>
-      updateCategory(id, payload),
+    mutationFn: ({ id, payload }: { id: number; payload: AccountCreatePayload }) =>
+      updateAccount(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       showToast({
