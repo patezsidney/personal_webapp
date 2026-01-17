@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Button, Card, Flex, Text, IconButton, Tooltip, Grid, Badge } from '@radix-ui/themes';
+import { Button, Card, Flex, Text, IconButton, Tooltip, Grid, Badge } from '@radix-ui/themes';
 
 import { ArrowLeftIcon, Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
