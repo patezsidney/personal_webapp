@@ -58,7 +58,7 @@ export const Sidebar = () => {
 
         <Flex direction="column" gap="2">
           {bottomMenuItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname.includes(item.href);
             return (
               <Link key={item.href} href={item.href} style={{ textDecoration: 'none' }}>
                 <Flex
